@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ets Neyret — Plomberie & Chauffage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0b1e3d;
+      --navy-light: #132a52;
+      --gold: #c9a84c;
+      --gold-light: #e2c06e;
+      --white: #ffffff;
+      --off-white: #f5f6f8;
+      --gray: #8a9ab0;
+      --text: #1a2b45;
+      --radius: 12px;
+      --shadow: 0 8px 40px rgba(11,30,61,0.12);
+      --shadow-lg: 0 20px 60px rgba(11,30,61,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 6vw;
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(11,30,61,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1a3a6b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 6vw 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 30px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 24px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,0.72);
+      max-width: 560px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: clamp(24px, 5vw, 64px);
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 60px 6vw; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray);
+      line-height: 1.7;
+      max-width: 520px;
+      font-weight: 300;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--off-white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .service-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .service-card p { font-size: 0.93rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
+
+    /* ── WHY ── */
+    #why { background: var(--navy); }
+    #why .section-title { color: var(--white); }
+    #why .section-sub { color: rgba(255,255,255,0.55); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 60px;
+    }
+    .why-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: background 0.3s;
+    }
+    .why-item:hover { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.2); }
+    .why-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.5;
+      line-height: 1;
+      min-width: 44px;
+    }
+    .why-item h4 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+    .why-item p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; font-weight: 300; }
+
+    /* ── PROCESS ── */
+    #process { background: var(--white); }
+    .process-steps {
+      display: flex;
+      gap: 0;
+      margin-top: 60px;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(12.5% + 18px);
+      right: calc(12.5% + 18px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      opacity: 0.3;
+    }
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 0 16px;
+    }
+    .step-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border: 3px solid rgba(201,168,76,0.3);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .step:hover .step-circle { border-color: var(--gold); transform: scale(1.08); }
+    .step h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .step p { font-size: 0.84rem; color: var(--gray); line-height: 1.6; font-weight: 300; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--off-white); }
+    .gallery-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 280px);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item:first-child { grid-row: span 2; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,30,61,0.6) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover::after { opacity: 1; }
+
+    /* placeholder gallery when no real images */
+    .gallery-placeholder {
+      background: linear-gradient(135deg, var(--navy-light), var(--navy));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .gallery-placeholder svg { width: 36px; height: 36px; stroke: var(--gold); opacity: 0.4; fill: none; stroke-width: 1.5; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--white); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .testimonial-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 18px; }
+    .testimonial-card blockquote {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    .author-location { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+    #contact .section-title { color: var(--white); }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      margin-top: 60px;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-icon {
+      width: 46px;
+      height: 46px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-item h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); font-weight: 500; margin-bottom: 4px; }
+    .contact-item p, .contact-item a { font-size: 1rem; color: var(--white); font-weight: 500; text-decoration: none; }
+    .contact-item a:hover { color: var(--gold); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: var(--white);
+      font-size: 0.93rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-group select option { background: var(--navy); color: var(--white); }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-submit {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #070f1f;
+      padding: 48px 6vw 32px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 28px;
+    }
+    .footer-brand .nav-logo { font-size: 1.6rem; display: block; margin-bottom: 12px; }
+    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.6; max-width: 280px; font-weight: 300; }
+    .footer-links h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 16px; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.9rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.28); }
+
+    /* ── URGENT BANNER ── */
+    .urgency-banner {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      text-align: center;
+      padding: 13px 20px;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .urgency-banner a { color: var(--navy); text-decoration: underline; font-weight: 700; }
+
+    /* ── FLOATING CTA ── */
+    .floating-cta {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(201,168,76,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .floating-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,168,76,0.5); }
+    .floating-cta svg { width: 16px; height: 16px; fill: var(--navy); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: span 1; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .process-steps { flex-direction: column; gap: 24px; }
+      .process-steps::before { display: none; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- Urgency Banner -->
+<div class="urgency-banner">
+  🚨 Urgence plomberie 24h/7j — Intervention rapide garantie. <a href="tel:0783242128">Appelez maintenant</a>
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <div class="nav-logo">Ets <span>Neyret</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Réalisations</a></li>
+    <li><a href="#process">Comment ça marche</a></li>
+    <li><a href="#testimonials">Avis</a></li>
+    <li><a href="#contact" class="nav-cta">Devis gratuit</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div>
+    <div class="hero-badge">Plomberie & Chauffage depuis 2014</div>
+    <h1>L'<em>expertise</em> au service<br/>de votre confort</h1>
+    <p>Installations, dépannages, diagnostics caméra — Ets Neyret intervient chez vous avec rigueur et savoir-faire depuis plus de 11 ans.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Demander un devis</a>
+      <a href="#services" class="btn-secondary">Nos services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">11</div><div class="stat-label">Ans d'expérience</div></div>
+      <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Clients satisfaits</div></div>
+      <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Urgences</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Certifié RGE</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-label">Ce que nous faisons</div>
+  <div class="section-title">Des prestations complètes<br/>pour tous vos besoins</div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>
+      </div>
+      <h3>Installation chauffe-eau</h3>
+      <p>Pose et remplacement de chauffe-eau thermodynamiques, électriques et solaires. Spécialiste Thermor et Atlantic, avec garanties constructeur.</p>
+    </div>
+    <div class="service-card fade-up delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>
+      <h3>Inspection caméra</h3>
+      <p>Diagnostic précis de vos canalisations par caméra endoscopique RIDGID SeeSnake. Localisation de bouchons, fissures et anomalies sans destruction.</p>
+    </div>
+    <div class="service-card fade-up delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      </div>
+      <h3>Sanitaires & WC</h3>
+      <p>Installation et remplacement de WC, lavabos, douches et baignoires. Pose soignée, joints parfaits, résultat impeccable.</p>
+    </div>
+    <div class="service-card fade-up delay-3">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3>Dépannage & urgences</h3>
+      <p>Fuite d'eau, canalisation bouchée, coupure d'eau chaude — nous intervenons 24h/7j pour sécuriser votre installation rapidement.</p>
+    </div>
+    <div class="service-card fade-up delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+      </div>
+      <h3>Débouchage canalisation</h3>
+      <p>Hydrocurage haute pression et furets motorisés pour déboucher efficacement colonnes d'évacuation, siphons et réseaux collectifs.</p>
+    </div>
+    <div class="service-card fade-up delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>Chauffage & PAC</h3>
+      <p>Installation et entretien de systèmes de chauffage : pompes à chaleur, radiateurs, planchers chauffants. Optimisez votre consommation énergétique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section id="why">
+  <div class="section-label">Pourquoi nous choisir</div>
+  <div class="section-title" style="color:white">Ce qui nous distingue</div>
+  <div class="section-sub">11 ans d'expérience, des artisans certifiés et un engagement total envers la qualité de chaque intervention.</div>
+  <div class="why-grid">
+    <div class="why-item fade-up">
+      <div class="why-num">01</div>
+      <div>
+        <h4>Artisans certifiés & assurés</h4>
+        <p>Tous nos techniciens sont qualifiés, assurés en responsabilité civile professionnelle et formés aux dernières normes en vigueur.</p>
+      </div>
+    </div>
+    <div class="why-item fade-up delay-1">
+      <div class="why-num">02</div>
+      <div>
+        <h4>Devis transparent & gratuit</h4>
+        <p>Pas de mauvaises surprises : chaque devis est détaillé, clair et sans frais cachés. Vous savez exactement ce que vous payez avant tout travail.</p>
+      </div>
+    </div>
+    <div class="why-item fade-up delay-2">
+      <div class="why-num">03</div>
+      <div>
+        <h4>Matériaux premium</h4>
+        <p>Nous travaillons exclusivement avec des marques reconnues (Thermor, RIDGID, Grohe...) pour garantir durabilité et fiabilité à long terme.</p>
+      </div>
+    </div>
+    <div class="why-item fade-up delay-3">
+      <div class="why-num">04</div>
+      <div>
+        <h4>Intervention rapide</h4>
+        <p>Disponibles 7j/7, nous nous engageons à intervenir dans les 2h pour les urgences afin de limiter les dégâts et vous remettre en confort rapidement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <div style="text-align:center; margin-bottom: 0;">
+    <div class="section-label" style="text-align:center">Comment ça marche</div>
+    <div class="section-title" style="text-align:center">Votre projet en 4 étapes</div>
+  </div>
+  <div class="process-steps" style="margin-top:60px">
+    <div class="step fade-up">
+      <div class="step-circle">1</div>
+      <h4>Contact</h4>
+      <p>Appelez-nous ou remplissez le formulaire. Réponse garantie en moins de 2h.</p>
+    </div>
+    <div class="step fade-up delay-1">
+      <div class="step-circle">2</div>
+      <h4>Diagnostic</h4>
+      <p>Un technicien évalue votre installation et établit un devis précis et gratuit.</p>
+    </div>
+    <div class="step fade-up delay-2">
+      <div class="step-circle">3</div>
+      <h4>Intervention</h4>
+      <p>Nos artisans interviennent proprement, dans les délais convenus, avec du matériel professionnel.</p>
+    </div>
+    <div class="step fade-up delay-3">
+      <div class="step-circle">4</div>
+      <h4>Garantie</h4>
+      <p>Chaque prestation est garantie. Votre satisfaction est notre priorité absolue.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <div class="section-label">Nos réalisations</div>
+      <div class="section-title">Un travail soigné,<br/>des clients ravis</div>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <!-- Replace src attributes with your real photo paths, e.g. src="photos/chauffe-eau.jpg" -->
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="height:100%; min-height: 280px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Photo chauffe-eau</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="height:280px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Inspection caméra</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="height:280px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Installation sanitaire</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="height:280px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Plomberie générale</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" style="height:280px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Chauffage</span>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center; color: var(--gray); font-size:0.85rem; margin-top: 20px; font-style:italic;">
+    → Remplacez les cases grises par vos vraies photos (voir le fichier index.html, section gallery)
+  </p>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="section-label" style="text-align:center">Témoignages</div>
+  <div class="section-title" style="text-align:center">Ce que disent nos clients</div>
+  <div class="testimonials-grid" style="margin-top:60px">
+    <div class="testimonial-card fade-up">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Intervention rapide suite à une fuite importante. Équipe très professionnelle, travail propre et tarif honnête. Je recommande vivement Ets Neyret !"</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">MR</div>
+        <div>
+          <div class="author-name">Michel R.</div>
+          <div class="author-location">Propriétaire, Lyon</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up delay-1">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Remplacement de deux chauffe-eau en un après-midi. Excellent travail, devis clair, aucune surprise. L'entreprise de confiance pour la plomberie."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">SD</div>
+        <div>
+          <div class="author-name">Sophie D.</div>
+          <div class="author-location">Syndic de copropriété</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up delay-2">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Diagnostic caméra très instructif, bouchon localisé précisément sans casse. Débouchage effectué le même jour. Service impeccable, je rappellerai sans hésiter."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">PL</div>
+        <div>
+          <div class="author-name">Pierre L.</div>
+          <div class="author-location">Gérant d'immeuble</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-label">Nous contacter</div>
+  <div class="section-title" style="color:white">Parlons de votre projet</div>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="contact-item fade-up">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.52 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 5.53 5.53l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <h4>Téléphone</h4>
+          <a href="tel:0783242128">+33 X XX XX XX XX</a>
+        </div>
+      </div>
+      <div class="contact-item fade-up delay-1">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <h4>Email</h4>
+          <a href="mailto:contact@etsneyret.fr">contact@etsneyret.fr</a>
+        </div>
+      </div>
+      <div class="contact-item fade-up delay-2">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <h4>Zone d'intervention</h4>
+          <p>Saint-Étienne & agglomération — Loire</p>
+        </div>
+      </div>
+      <div class="contact-item fade-up delay-3">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h4>Horaires</h4>
+          <p>Lun–Sam 8h–19h · Urgences 24/7</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form fade-up delay-1" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom & Nom</label>
+          <input type="text" placeholder="Jean Dupont" required />
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" placeholder="06 XX XX XX XX" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="jean.dupont@email.fr" />
+      </div>
+      <div class="form-group">
+        <label>Type de prestation</label>
+        <select>
+          <option value="">Sélectionnez une prestation</option>
+          <option>Installation chauffe-eau</option>
+          <option>Inspection caméra</option>
+          <option>Sanitaires & WC</option>
+          <option>Dépannage urgence</option>
+          <option>Débouchage canalisation</option>
+          <option>Chauffage & PAC</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Décrivez votre besoin</label>
+        <textarea placeholder="Décrivez votre problème ou votre projet en quelques mots..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Envoyer ma demande →</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">Ets <span style="color:var(--gold)">Neyret</span></span>
+      <p>Plomberie, chauffage et sanitaires depuis 1995. Qualité, réactivité et honnêteté pour chaque intervention.</p>
+    </div>
+    <div class="footer-links">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Chauffe-eau</a></li>
+        <li><a href="#services">Inspection caméra</a></li>
+        <li><a href="#services">Sanitaires</a></li>
+        <li><a href="#services">Urgences</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Entreprise</h5>
+      <ul>
+        <li><a href="#why">À propos</a></li>
+        <li><a href="#testimonials">Témoignages</a></li>
+        <li><a href="#process">Notre méthode</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Légal</h5>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">CGV</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Ets Neyret. Tous droits réservés.</p>
+    <p>Artisan certifié RGE · SIRET : XXX XXX XXX XXXXX</p>
+  </div>
+</footer>
+
+<!-- Floating CTA -->
+<a href="tel:0783242128" class="floating-cta">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.52 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 5.53 5.53l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  Appel urgent
+</a>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Intersection observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.cssText = 'display:flex; flex-direction:column; position:fixed; top:70px; left:0; right:0; background:rgba(11,30,61,0.98); padding:24px 6vw; gap:20px; backdrop-filter:blur(10px);';
+    }
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Demande envoyée — Nous vous rappelons sous 2h';
+    btn.style.background = '#2ecc71';
+    btn.style.color = 'white';
+    btn.disabled = true;
+  }
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
